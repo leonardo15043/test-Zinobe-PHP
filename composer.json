@@ -1,0 +1,21 @@
+{
+    "name": "leonardo/test-zinobe",
+    "type": "project",
+    "require": {
+        "illuminate/database": "^8.64",
+        "vlucas/phpdotenv": "^5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\":"src/",
+            "Core\\":"core/"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "leonardo15043",
+            "email": "lahernandez15043@gmail.com"
+        }
+    ]
+}

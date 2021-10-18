@@ -1,3 +1,2 @@
-<?php
-echo $data->name;
-?>
+<?= $this->layout('layouts/app', ['title' => 'User Profile']) ?>
+dd

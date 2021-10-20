@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\User;
 use Core\Providers\Template;
 use Core\Providers\Validator;
+use App\Services\CountrieService;
 
 class UserController 
 {
@@ -37,6 +38,8 @@ class UserController
 
     public function register(){
 
+        $countries = CountrieService::getAll();
+
         if($_POST){
             $validator = Validator::data(array(
                 'name' => array(
@@ -56,6 +59,8 @@ class UserController
                     'pattern' => "/^(?=.*?[0-9])[A-Za-z\d@$!%*#?&]{6,}$/i",
                 )
             ));
+
+            
     
             $existUser = User::where("identification",$_POST['identification'])
                               ->orWhere("email",$_POST['email'])->first();
@@ -72,17 +77,19 @@ class UserController
     
                $validator['save'] = true;
                unset($_POST);
-               return Template::view('user/registration', $validator);
+               $dataUser = array_merge($validator,['countries'=> json_decode($countries)]);
+               return Template::view('user/registration', $dataUser );
     
             }else{;
                if($existUser){
                  $validator['exist'] = true;
                }
-                return Template::view('user/registration', $validator);
+                $dataUser = array_merge($validator,['countries'=> json_decode($countries)]);
+                return Template::view('user/registration', $dataUser );
             }
         }
 
-        return Template::view('user/registration');
+        return Template::view('user/registration', ['countries'=> json_decode($countries)]);
     }
 
 }

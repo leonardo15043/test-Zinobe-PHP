@@ -19,7 +19,11 @@
   <div class="form-group">
     <label for="country">País</label>
     <select class="form-control" id="country" name="country" required>
-      <option value="1">Colombia</option>
+      <?php
+        foreach ($countries->result as $countrie) {
+          echo '<option value="'.$countrie->name.'">'.$countrie->name.'</option>';
+        }
+      ?>
     </select>
   </div>
   <div class="form-group">

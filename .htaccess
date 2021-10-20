@@ -1,6 +1,7 @@
 Options +FollowSymLinks
-Options -Indexes
 
 RewriteEngine On
- 
-RewriteRule ^(\w+)$ index.php?action=$1
+Options -Indexes
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php?action=$1 [L,QSA]
+# RewriteRule ^(.*)/(.*)$ index.php?action=$1&id=$2 [L,QSA]

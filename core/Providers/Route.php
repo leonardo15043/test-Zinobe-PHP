@@ -2,34 +2,32 @@
 
 namespace Core\Providers;
 
+use Core\Providers\Auth;
+use App\Controllers\SiteController;
+
 class Route
 {
+    public function path($uri,$controller,$enable_session){
 
-    public function path($uri,$controller){
-            
+        $session = new Auth();
+
         if(isset($_GET['action']) && $_GET['action'] != ''){
-                  
-            switch ($_GET['action']) {
-                case $uri:
-                    return eval('App\Controllers\\'.$controller.';');
-                    break;
-
-                case '':
-                    return eval('App\Controllers\\'.$controller.';');
-                    break;
-                
-                default:
-                    # code...
-                    break;
+       
+            if(empty($_SESSION['time']) && $enable_session === true && $_GET['action'] == $uri){  
+                return header("Location:login");
             }
-
+            if(isset($_SESSION['time']) && $enable_session === false && $_GET['action'] == $uri){ 
+                return header("Location:home");
+            }else if($_GET['action'] == $uri){
+                return eval('App\Controllers\\'.$controller.';');
+            }   
+    
         }else{
             if( $uri == "/"){
-                return eval('App\Controllers\\'.$controller.';');
+                return header("Location:login");
             }
-        }
-
-
+        }      
+              
     }
 
 }

@@ -5,14 +5,15 @@ namespace App\Controllers;
 use App\Models\User;
 use Core\Providers\Template;
 use Core\Providers\Validator;
+use Core\Providers\Auth;
+
 use App\Services\CountrieService;
 
-class UserController 
+class LoginController 
 {
     public function index()
     {
-        if($_POST){
-            
+        if($_POST){ 
             $validator = Validator::data(array(
                 'email' => array(
                     'value'=> $_POST['email'],
@@ -25,15 +26,17 @@ class UserController
             ));
 
             $existUser = User::where("email",$_POST['email'])->Where("password",md5($_POST['password']))->first();
-
+    
             if($validator['state'] === true && isset($existUser) ){
-                return Template::view('home');
+                $session = new Auth();
+                $session->start('name',$existUser->name);
+                header("Location: home");
             }else{
-                return Template::view('user/login', $validator);
+                return Template::view('entry/login', $validator);
             }
         }
 
-        return Template::view('user/login');
+        return Template::view('entry/login');
     }
 
     public function register(){
@@ -60,8 +63,6 @@ class UserController
                 )
             ));
 
-            
-    
             $existUser = User::where("identification",$_POST['identification'])
                               ->orWhere("email",$_POST['email'])->first();
            
@@ -78,18 +79,22 @@ class UserController
                $validator['save'] = true;
                unset($_POST);
                $dataUser = array_merge($validator,['countries'=> json_decode($countries)]);
-               return Template::view('user/registration', $dataUser );
+               return Template::view('entry/registration', $dataUser );
     
             }else{;
                if($existUser){
                  $validator['exist'] = true;
                }
                 $dataUser = array_merge($validator,['countries'=> json_decode($countries)]);
-                return Template::view('user/registration', $dataUser );
+                return Template::view('entry/registration', $dataUser );
             }
         }
 
-        return Template::view('user/registration', ['countries'=> json_decode($countries)]);
+        return Template::view('entry/registration', ['countries'=> json_decode($countries)]);
+    }
+
+    public function destroySession(){
+        Auth::destroy();
     }
 
 }

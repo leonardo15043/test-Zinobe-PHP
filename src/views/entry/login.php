@@ -12,4 +12,5 @@
     <div class="invalid-feedback">Contraseña incorrecta</div>
 </div>
   <button type="submit" class="btn btn-primary">Entrar</button>
+  <a href="register" class="btn btn-info">Registrarse</a>
 </form>

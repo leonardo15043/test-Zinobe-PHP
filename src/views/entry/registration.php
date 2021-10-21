@@ -34,4 +34,5 @@
   <?php if(isset($exist) && $exist == true){ echo '<div class="alert alert-danger" role="alert">Este usuario ya se encuentra registrado</div>'; }?>
   <?php if(isset($save) && $save == true){ echo '<div class="alert alert-success" role="alert">Registro completado correctamente</div>'; }?>
   <button type="submit" class="btn btn-primary">Enviar</button>
+  <a href="login" class="btn btn-info">Login</a>
 </form>

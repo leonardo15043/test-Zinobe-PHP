@@ -7,27 +7,23 @@ use App\Controllers\SiteController;
 
 class Route
 {
-    public function path($uri,$controller,$enable_session){
-
+    //Este metodo permite crear las rutas dinamicamente y asignarlas a cada controlador depende de la petición 
+    public function path($uri,$controller,$enable_session)
+    {
         $session = new Auth();
-
-        if(isset($_GET['action']) && $_GET['action'] != ''){
-       
-            if(empty($_SESSION['time']) && $enable_session === true && $_GET['action'] == $uri){  
+        if (isset($_GET['action']) && $_GET['action'] != '') {
+            if (empty($_SESSION['time']) && $enable_session === true && $_GET['action'] == $uri) {  
                 return header("Location:login");
             }
-            if(isset($_SESSION['time']) && $enable_session === false && $_GET['action'] == $uri){ 
+            if (isset($_SESSION['time']) && $enable_session === false && $_GET['action'] == $uri) { 
                 return header("Location:home");
-            }else if($_GET['action'] == $uri){
+            } else if ($_GET['action'] == $uri) {
                 return eval('App\Controllers\\'.$controller.';');
             }   
-    
-        }else{
-            if( $uri == "/"){
+        } else {
+            if ( $uri == "/") {
                 return header("Location:login");
             }
-        }      
-              
+        }           
     }
-
 }

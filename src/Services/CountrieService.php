@@ -6,7 +6,6 @@ use GuzzleHttp\Client;
 
 class CountrieService
 {
-
     public $client;
 
     public function __construct()
@@ -17,11 +16,10 @@ class CountrieService
         ]);
     }
 
-    public function getAll(){
-
+    public function getAll()
+    {
         $obj = new CountrieService();
         $response = $obj->client->request('GET', '/countries');
         return $response->getBody()->getContents();
-
-    }
+    }   
 }

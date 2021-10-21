@@ -11,6 +11,7 @@
     <input type="password" class="form-control <?php if($password['state'] === false){ echo "is-invalid"; }?>" name="password" id="exampleInputPassword1" required>
     <div class="invalid-feedback">Contraseña incorrecta</div>
 </div>
+<?php if(isset($exist) && $exist == false){ echo '<div class="alert alert-danger" role="alert">Este usuario no existe</div>'; }?>
   <button type="submit" class="btn btn-primary">Entrar</button>
   <a href="register" class="btn btn-info">Registrarse</a>
 </form>
